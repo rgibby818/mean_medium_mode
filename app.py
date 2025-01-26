@@ -46,45 +46,54 @@ def get_input():
     print(NUMBER_PROMPT)
 
     while True:
-        number = input()
-
-        # Convert input to a Integer or a Floating point number
         try:
-            if float(number).is_integer():
-                iterable.append(int(number))
-            else:
-                iterable.append(float(number))
 
-        except ValueError:
-            if number == "":
-                if (
-                    len(iterable) != 0
-                ):  # If no input is recived, User is done entering inputs.
-                    break
-                print(
-                    "No valid numbers inputted. To exit press CTRL + C"
-                )  # User has not inputted any numbers. Reprompt
-            else:
-                print("Invalid input. Numbers only")  # Wrong input Loop again
+            number = input()
+
+            # Convert input to a Integer or a Floating point number
+            try:
+                if float(number).is_integer():
+                    iterable.append(int(number))
+                else:
+                    iterable.append(float(number))
+
+            except ValueError:
+                if number == "":
+                    if (
+                        len(iterable) != 0
+                    ):  # If no input is recived, User is done entering inputs.
+                        break
+                    print(
+                        "No valid numbers inputted. To exit press CTRL + C"
+                    )  # User has not inputted any numbers. Reprompt
+                else:
+                    print("Invalid input. Numbers only")  # Wrong input Loop again
+        except KeyboardInterrupt:
+            print("\nExiting script")
+            exit()
     return iterable
 
 
-# User picks what function to call mean or median
+# User picks what function to call
 def get_function():
     function_entries = {"1": "mean", "2": "median", "3": "mode"}
 
     print(f"{FUNCTION_PROMPT}")
     while True:
-        function_type = input().lower()
+        try:
+            function_type = input().lower()
 
-        if function_type in function_entries.keys():  # If user does 1 or 2
-            return function_entries[function_type]
+            if function_type in function_entries.keys():  # If user uses numbers
+                return function_entries[function_type]
 
-        if function_type in function_entries.values():  # If user does mean or median
-            return function_type
+            if function_type in function_entries.values():  # If user types out operator
+                return function_type
 
-        print("Invalid option, please try again\n")
-        print(FUNCTION_PROMPT)
+            print("Invalid option, please try again\n")
+            print(FUNCTION_PROMPT)
+        except KeyboardInterrupt:
+            print("\nExiting script")
+            exit()
 
 
 def main():
@@ -102,6 +111,8 @@ def main():
     try:
         if answer.is_integer():
             print(f"The {func} of {iterable} is {int(answer)}")
+        else:
+            print(f"The {func} of {iterable} is {answer}")
     except AttributeError:
         print(f"The {func} of {iterable} is {answer}")
 
