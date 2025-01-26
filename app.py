@@ -3,7 +3,9 @@ from functools import reduce
 
 STARTING_MESSAGE = "Starting mean/medium script..."
 NUMBER_PROMPT = "Please enter each number, When finished press enter"
-FUNCTION_PROMPT = "What kind of operation whould you like?\n1.) Mean\n2.) Median"
+FUNCTION_PROMPT = (
+    "What kind of operation whould you like?\n1.) Mean\n2.) Median\n3.) Mode"
+)
 
 
 # Returns the mean of a list of floats and integers
@@ -14,6 +16,28 @@ def mean(array):
 # Returns the median of a list of floats and integers
 def median(array):
     return sorted(array)[len(array) // 2]
+
+
+# Returns the mode of a list of floats and integers
+def mode(array):
+    numbers = {}  # Dict to keep track of repeating numbers
+
+    for number in array:  # Loop through the list
+        if number in numbers:  # The number has repeated
+            numbers[number] += 1
+        else:  # First time number has appeared in the loop
+            numbers[number] = 1
+
+    frequency = max(numbers.values())  # Returns the max value in the dict
+    if frequency == 1:  # Return none if there has not been a repeating number
+        return None
+
+    # List comprehension that returns the list of numbers that are the most frequent repeating numbers.
+    mode = [key for key, value in numbers.items() if value == frequency]
+    # Format output if there is only one mode
+    if len(mode) == 1:
+        return mode[0]
+    return mode
 
 
 # Get user input
@@ -47,7 +71,7 @@ def get_input():
 
 # User picks what function to call mean or median
 def get_function():
-    function_entries = {"1": "mean", "2": "median"}
+    function_entries = {"1": "mean", "2": "median", "3": "mode"}
 
     print(f"{FUNCTION_PROMPT}")
     while True:
@@ -72,12 +96,13 @@ def main():
     )  # Gather list data and operation type from user.
     answer = globals()[func](
         iterable
-    )  # Call choicen operation from user with data provided by user.
+    )  # Call chosen operation from user with data provided by user.
 
     # Make the output look pretty.
-    if answer.is_integer():
-        print(f"The {func} of {iterable} is {int(answer)}")
-    else:
+    try:
+        if answer.is_integer():
+            print(f"The {func} of {iterable} is {int(answer)}")
+    except AttributeError:
         print(f"The {func} of {iterable} is {answer}")
 
 
