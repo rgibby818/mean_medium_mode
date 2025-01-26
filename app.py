@@ -10,10 +10,10 @@ def median_Of_Group(a, b, c, d, e):
 def results():
     if choice == 'mean':
         print('Your result is:')
-        print(median_Of_Group(a, b, c, d, e))
+        print(mean_Of_Group(a, b, c, d, e))
     elif choice == 'median':
         print('Your result is:')  
-        print(mean_Of_Group(a, b, c, d, e))
+        print(median_Of_Group(a, b, c, d, e))
     else:
         return
 
@@ -25,12 +25,8 @@ def results2():
         print('Your result is:')  
         print(median_Of_Group(a, b, c, d, e))
     else:
-        print('Sorry, I have no idea!')
+        print('It seems like you are not even trying, goodbye!1')
     
-
-   
-
-
 
 print('Please enter 5 numbers:')
 
