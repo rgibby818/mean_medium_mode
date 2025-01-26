@@ -24,7 +24,7 @@ def get_input():
     while True:
         number = input()
 
-        # Convert input to a Integer or a Floating put number
+        # Convert input to a Integer or a Floating point number
         try:
             if float(number).is_integer():
                 iterable.append(int(number))
