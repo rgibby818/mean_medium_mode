@@ -1,48 +1,80 @@
-def mean_Of_Group(a, b, c, d, e):
-    return (a + b + c + d + e) / 5
+from functools import reduce
 
-def median_Of_Group(a, b, c, d, e):
-    nums = [a, b, c, d, e]
-    nums.sort()
-    index = 2
-    return (nums[index])
 
-def results():
-    if choice == 'mean':
-        print('Your result is:')
-        print(mean_Of_Group(a, b, c, d, e))
-    elif choice == 'median':
-        print('Your result is:')  
-        print(median_Of_Group(a, b, c, d, e))
+STARTING_MESSAGE = "Starting mean/medium script..."
+NUMBER_PROMPT = "Please enter each number, When finished press enter"
+FUNCTION_PROMPT = "What kind of operation whould you like?\n1.) Mean\n2.) Median"
+
+
+# Returns the mean of a list of floats and integers
+def mean(array):
+    return float(reduce(lambda x, y: x + y, array)) / len(array)
+
+
+# Returns the median of a list of floats and integers
+def median(array):
+    return sorted(array)[len(array) // 2]
+
+
+# Get user input
+def get_input():
+    iterable = []
+    print(f"{NUMBER_PROMPT}")
+
+    while True:
+        number = input()
+
+        # If no input is recived, User is done entering inputs.
+        if number == "":
+            break
+
+        # Convert input to a Integer or a Floating put number
+        try:
+            if float(number).is_integer():
+                iterable.append(int(number))
+            else:
+                iterable.append(float(number))
+
+        except ValueError:
+            print("Invalid input. Numbers only")  # Wrong input Loop again
+    return iterable
+
+
+# User picks what function to call mean or median
+def get_function():
+    function_entries = {"1": "mean", "2": "median"}
+
+    print(f"{FUNCTION_PROMPT}")
+    while True:
+        function_type = input().lower()
+
+        if function_type in function_entries.keys():  # If user does 1 or 2
+            return function_entries[function_type]
+
+        if function_type in function_entries.values():  # If user does mean or median
+            return function_type
+
+        print("Invalid option, please try again\n")
+        print(FUNCTION_PROMPT)
+
+
+def main():
+    print(f"{STARTING_MESSAGE}")
+
+    iterable, func = (
+        get_input(),
+        get_function(),
+    )  # Gather list data and operation type from user.
+    answer = globals()[func](
+        iterable
+    )  # Call choicen operation from user with data provided by user.
+
+    # Make the output look pretty.
+    if answer.is_integer():
+        print(f"The {func} of {iterable} is {int(answer)}")
     else:
-        return
+        print(f"The {func} of {iterable} is {answer}")
 
-def results2():
-    if choice == 'mean':
-        print('Your result is:')
-        print(mean_Of_Group(a, b, c, d, e))
-    elif choice == 'median':
-        print('Your result is:')  
-        print(median_Of_Group(a, b, c, d, e))
-    else:
-        print('It seems like you are not even trying, goodbye!1')
-    
 
-print('Please enter 5 numbers:')
-
-a = int(input())
-b = int(input())
-c = int(input())
-d = int(input())
-e = int(input())
-
-choice = 0
-
-print('Please choose either mean or median as your result:')
-choice = str(input())
-results()
-
-print('Really? How did you mess that up? Choose again:')
-choice = str(input())
-results2()
-
+if __name__ == "__main__":
+    main()
