@@ -24,10 +24,6 @@ def get_input():
     while True:
         number = input()
 
-        # If no input is recived, User is done entering inputs.
-        if number == "":
-            break
-
         # Convert input to a Integer or a Floating put number
         try:
             if float(number).is_integer():
@@ -36,7 +32,16 @@ def get_input():
                 iterable.append(float(number))
 
         except ValueError:
-            print("Invalid input. Numbers only")  # Wrong input Loop again
+            if number == "":
+                if (
+                    len(iterable) != 0
+                ):  # If no input is recived, User is done entering inputs.
+                    break
+                print(
+                    "No valid numbers inputted. To exit press CTRL + C"
+                )  # User has not inputted any numbers. Reprompt
+            else:
+                print("Invalid input. Numbers only")  # Wrong input Loop again
     return iterable
 
 
