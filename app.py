@@ -43,7 +43,7 @@ def mode(array):
 # Get user input
 def get_input():
     iterable = []
-    print(f"{NUMBER_PROMPT}")
+    print(NUMBER_PROMPT)
 
     while True:
         number = input()
